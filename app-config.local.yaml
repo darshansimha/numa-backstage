@@ -1,1 +1,5 @@
-# Backstage override configuration for your local development environment
+# Backstage override configuration for your local development environment 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
+integrations:
+  github:
+    - host: github.com
+      token: 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
