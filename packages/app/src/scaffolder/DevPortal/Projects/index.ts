@@ -1,0 +1,1 @@
+export { DevPortalProjectFieldExtension } from './extension';

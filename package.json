@@ -54,5 +54,9 @@
     "*.{json,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "@rjsf/utils": "^5.16.1",
+    "react-jsonschema-form": "^1.8.1"
   }
 }
