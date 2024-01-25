@@ -13,36 +13,25 @@ spec:
   # used to gather input data for the execution of the template.
   parameters:
     - title: Fill in some steps
+      ui:ObjectFieldTemplate: NumaflowCreate
       required:
         - name
+        - project
+        - infrastructure
       properties:
         name:
           title: Name
           type: string
           description: Unique name of the Pipeline
           ui:autofocus: true
-          ui:options:
-            rows: 5
-    - title: Choose a Project
-      required:
-        - project
-      properties:
         project:
           title: Project
           ui:field: DevPortalProjectField
-          ui:options:
-            rows: 5
-            columns: 5
-    - title: Choose the Infrastructure
-      required:
-        - infrastructure
-      properties:
+          description: Project for attribution
         infrastructure:
           title: Infrastructure
           ui:field: DevPortalInfrastructureField
-          ui:options:
-            rows: 5
-            columns: 5
+          description: Infrastructure for hosting the pipeline
   # These steps are executed in the scaffolder backend, using data that we gathered
   # via the parameters above.
   steps:

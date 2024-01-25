@@ -36,9 +36,13 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
 import { SignInPage } from '@backstage/core-components';
-import { ScaffolderFieldExtensions } from '@backstage/plugin-scaffolder-react';
-import { DevPortalProjectFieldExtension } from './scaffolder/DevPortal/Projects';
-import { DevPortalInfrastructureFieldExtension } from './scaffolder/DevPortal/Infrastructure';
+import {
+  ScaffolderFieldExtensions,
+  ScaffolderLayouts,
+} from '@backstage/plugin-scaffolder-react';
+import { DevPortalProjectFieldExtension } from './scaffolder/CustomFieldExtensions/DevPortal/Projects';
+import { DevPortalInfrastructureFieldExtension } from './scaffolder/CustomFieldExtensions/DevPortal/Infrastructure';
+import { NumaflowCreateLayout } from './scaffolder/CustomStepLayouts/NumaflowCreateLayout';
 
 const app = createApp({
   apis,
@@ -95,6 +99,9 @@ const routes = (
       </TechDocsAddons>
     </Route>
     <Route path="/create" element={<ScaffolderPage />}>
+      <ScaffolderLayouts>
+        <NumaflowCreateLayout />
+      </ScaffolderLayouts>
       <ScaffolderFieldExtensions>
         <DevPortalProjectFieldExtension />
         <DevPortalInfrastructureFieldExtension />

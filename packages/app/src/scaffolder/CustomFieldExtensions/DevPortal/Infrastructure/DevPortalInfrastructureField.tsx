@@ -6,18 +6,18 @@ import axios from 'axios';
 import { TextField } from '@material-ui/core';
 
 const listOfAllowedValues: string[] = [];
-export const DevPortalProjectField = ({
+export const DevPortalInfrastructureField = ({
   onChange,
   rawErrors,
   required,
   formData,
 }: FieldProps<string>) => {
-  const [projectList, setProjectList] = useState<any[]>([]);
+  const [infrastructureList, setInfrastructureList] = useState<any[]>([]);
 
-  const fetchProjectData = useCallback(async () => {
+  const fetchInfrastructureData = useCallback(async () => {
     const response = await axios({
       method: 'get',
-      url: 'http://localhost:8000/getProjects',
+      url: 'http://localhost:8000/getInfrastructure',
       withCredentials: false,
       headers: {
         'Content-Type': 'text/plain',
@@ -29,15 +29,15 @@ export const DevPortalProjectField = ({
       comboBoxObj.push({
         label: item.name,
         id: item.id,
-        key: item.key,
+        snowId: item.snowId,
       });
       listOfAllowedValues.push(item.id);
     });
-    setProjectList(comboBoxObj);
+    setInfrastructureList(comboBoxObj);
   }, []);
 
   useEffect(() => {
-    fetchProjectData();
+    fetchInfrastructureData();
   }, [formData]);
   return (
     <FormControl
@@ -48,9 +48,8 @@ export const DevPortalProjectField = ({
       <Autocomplete
         disablePortal
         id="combo-box-demo"
-        options={projectList}
-        sx={{ width: 400 }}
-        renderInput={params => <TextField {...params} label="Project" />}
+        options={infrastructureList}
+        renderInput={params => <TextField {...params} label="Infrastructure" />}
         onChange={(_e, value) => {
           onChange(value || '');
         }}
@@ -64,7 +63,7 @@ export const DevPortalProjectField = ({
   You will get the value from the `onChange` handler before as the value here to make sure that the types are aligned\
 */
 
-export const validateDevPortalProjectFieldValidation = (
+export const validateDevPortalInfrastructureFieldValidation = (
   value: any,
   validation: FieldValidation,
 ) => {

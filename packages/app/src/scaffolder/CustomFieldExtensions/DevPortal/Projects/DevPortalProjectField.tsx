@@ -6,18 +6,18 @@ import axios from 'axios';
 import { TextField } from '@material-ui/core';
 
 const listOfAllowedValues: string[] = [];
-export const DevPortalInfrastructureField = ({
+export const DevPortalProjectField = ({
   onChange,
   rawErrors,
   required,
   formData,
 }: FieldProps<string>) => {
-  const [infrastructureList, setInfrastructureList] = useState<any[]>([]);
+  const [projectList, setProjectList] = useState<any[]>([]);
 
-  const fetchInfrastructureData = useCallback(async () => {
+  const fetchProjectData = useCallback(async () => {
     const response = await axios({
       method: 'get',
-      url: 'http://localhost:8000/getInfrastructure',
+      url: 'http://localhost:8000/getProjects',
       withCredentials: false,
       headers: {
         'Content-Type': 'text/plain',
@@ -29,15 +29,15 @@ export const DevPortalInfrastructureField = ({
       comboBoxObj.push({
         label: item.name,
         id: item.id,
-        snowId: item.snowId,
+        key: item.key,
       });
       listOfAllowedValues.push(item.id);
     });
-    setInfrastructureList(comboBoxObj);
+    setProjectList(comboBoxObj);
   }, []);
 
   useEffect(() => {
-    fetchInfrastructureData();
+    fetchProjectData();
   }, [formData]);
   return (
     <FormControl
@@ -48,9 +48,8 @@ export const DevPortalInfrastructureField = ({
       <Autocomplete
         disablePortal
         id="combo-box-demo"
-        options={infrastructureList}
-        sx={{ width: 400 }}
-        renderInput={params => <TextField {...params} label="Infrastructure" />}
+        options={projectList}
+        renderInput={params => <TextField {...params} label="Project" />}
         onChange={(_e, value) => {
           onChange(value || '');
         }}
@@ -64,7 +63,7 @@ export const DevPortalInfrastructureField = ({
   You will get the value from the `onChange` handler before as the value here to make sure that the types are aligned\
 */
 
-export const validateDevPortalInfrastructureFieldValidation = (
+export const validateDevPortalProjectFieldValidation = (
   value: any,
   validation: FieldValidation,
 ) => {
