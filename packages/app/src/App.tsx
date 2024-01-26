@@ -43,6 +43,7 @@ import {
 import { DevPortalProjectFieldExtension } from './scaffolder/CustomFieldExtensions/DevPortal/Projects';
 import { DevPortalInfrastructureFieldExtension } from './scaffolder/CustomFieldExtensions/DevPortal/Infrastructure';
 import { NumaflowCreateLayout } from './scaffolder/CustomStepLayouts/NumaflowCreateLayout';
+import { CheckboxFieldExtension } from './scaffolder/CustomFieldExtensions/General';
 
 const app = createApp({
   apis,
@@ -105,6 +106,7 @@ const routes = (
       <ScaffolderFieldExtensions>
         <DevPortalProjectFieldExtension />
         <DevPortalInfrastructureFieldExtension />
+        <CheckboxFieldExtension />
       </ScaffolderFieldExtensions>
     </Route>
     <Route path="/api-docs" element={<ApiExplorerPage />} />

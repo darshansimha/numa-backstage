@@ -13,6 +13,9 @@ export const DevPortalInfrastructureField = ({
   formData,
 }: FieldProps<string>) => {
   const [infrastructureList, setInfrastructureList] = useState<any[]>([]);
+  const [infraValue, setInfraValue] = useState<any>(
+    formData ? formData : undefined,
+  );
 
   const fetchInfrastructureData = useCallback(async () => {
     const response = await axios({
@@ -26,14 +29,22 @@ export const DevPortalInfrastructureField = ({
     });
     const comboBoxObj: any[] = [];
     response.data.forEach((item: any) => {
-      comboBoxObj.push({
+      const val = {
         label: item.name,
         id: item.id,
         snowId: item.snowId,
-      });
+      };
+      comboBoxObj.push(val);
+      if (formData && formData.id === item.id) {
+        setInfraValue(val);
+      }
       listOfAllowedValues.push(item.id);
     });
     setInfrastructureList(comboBoxObj);
+  }, []);
+
+  const valueChange = useCallback((_, value) => {
+    onChange(value);
   }, []);
 
   useEffect(() => {
@@ -50,9 +61,8 @@ export const DevPortalInfrastructureField = ({
         id="combo-box-demo"
         options={infrastructureList}
         renderInput={params => <TextField {...params} label="Infrastructure" />}
-        onChange={(_e, value) => {
-          onChange(value || '');
-        }}
+        onChange={valueChange}
+        value={infraValue}
       />
     </FormControl>
   );

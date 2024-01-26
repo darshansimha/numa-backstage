@@ -32,6 +32,16 @@ spec:
           title: Infrastructure
           ui:field: DevPortalInfrastructureField
           description: Infrastructure for hosting the pipeline
+        languages:
+          title: Languages
+          ui:field: CheckboxField
+          ui:items:
+            type: string
+            values:
+              - python
+              - java
+              - golang
+          description: Languages used in the pipeline
   # These steps are executed in the scaffolder backend, using data that we gathered
   # via the parameters above.
   steps:

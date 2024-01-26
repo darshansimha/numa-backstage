@@ -13,6 +13,9 @@ export const DevPortalProjectField = ({
   formData,
 }: FieldProps<string>) => {
   const [projectList, setProjectList] = useState<any[]>([]);
+  const [projectValue, setProjectValue] = useState<any>(
+    formData ? formData : undefined,
+  );
 
   const fetchProjectData = useCallback(async () => {
     const response = await axios({
@@ -26,14 +29,22 @@ export const DevPortalProjectField = ({
     });
     const comboBoxObj: any[] = [];
     response.data.forEach((item: any) => {
-      comboBoxObj.push({
+      const val = {
         label: item.name,
         id: item.id,
         key: item.key,
-      });
+      };
+      comboBoxObj.push(val);
       listOfAllowedValues.push(item.id);
+      if (formData && formData.id === item.id) {
+        setProjectValue(val);
+      }
     });
     setProjectList(comboBoxObj);
+  }, []);
+
+  const valueChange = useCallback((_, value) => {
+    onChange(value);
   }, []);
 
   useEffect(() => {
@@ -50,9 +61,8 @@ export const DevPortalProjectField = ({
         id="combo-box-demo"
         options={projectList}
         renderInput={params => <TextField {...params} label="Project" />}
-        onChange={(_e, value) => {
-          onChange(value || '');
-        }}
+        onChange={valueChange}
+        value={projectValue}
       />
     </FormControl>
   );

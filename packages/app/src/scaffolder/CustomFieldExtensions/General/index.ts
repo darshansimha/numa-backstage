@@ -1,0 +1,1 @@
+export { CheckboxFieldExtension } from './extension';
