@@ -28,10 +28,11 @@ export const DevPortalInfrastructureField = ({
       },
     });
     const comboBoxObj: any[] = [];
-    response.data.forEach((item: any) => {
+    response.data.forEach((item: any, index: number) => {
       const val = {
         label: item.name,
         id: item.id,
+        key: item.id + index,
         snowId: item.snowId,
       };
       comboBoxObj.push(val);

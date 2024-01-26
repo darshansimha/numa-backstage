@@ -28,11 +28,11 @@ export const DevPortalProjectField = ({
       },
     });
     const comboBoxObj: any[] = [];
-    response.data.forEach((item: any) => {
+    response.data.forEach((item: any, index: number) => {
       const val = {
         label: item.name,
         id: item.id,
-        key: item.key,
+        key: item.key + index,
       };
       comboBoxObj.push(val);
       listOfAllowedValues.push(item.id);
