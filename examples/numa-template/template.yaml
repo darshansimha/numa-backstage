@@ -45,37 +45,29 @@ spec:
   # These steps are executed in the scaffolder backend, using data that we gathered
   # via the parameters above.
   steps:
-    # Each step executes an action, in this case one templates files into the working directory.
-    - id: fetch-base
-      name: Fetch Base
-      action: fetch:template
+    - id: devportal_request
+      name: Devportal Create Request
+      action: http:external:request
       input:
-        url: ./content
-        values:
+        method: 'POST'
+        url: 'http://localhost:8000/createDevPortalAsset'
+        headers:
+          content-type: 'application/json'
+        body:
           name: ${{ parameters.name }}
-
-    # This step publishes the contents of the working directory to GitHub.
-    - id: publish
-      name: Publish
-      action: publish:github
+          project: ${{ parameters.project }}
+          infrastructure: ${{ parameters.infrastructure }}
+          languages: ${{ parameters.languages }}
+    - id: asterias_request
+      name: Asterias Create Request
+      action: http:external:request
       input:
-        allowedHosts: ['github.com']
-        description: This is ${{ parameters.name }}
-        repoUrl: ${{ parameters.repoUrl }}
-
-    # The final step is to register our new component in the catalog.
-    - id: register
-      name: Register
-      action: catalog:register
-      input:
-        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
-        catalogInfoPath: '/catalog-info.yaml'
-
-  # Outputs are displayed to the user after a successful execution of the template.
-  output:
-    links:
-      - title: Repository
-        url: ${{ steps['publish'].output.remoteUrl }}
-      - title: Open in catalog
-        icon: catalog
-        entityRef: ${{ steps['register'].output.entityRef }}
+        method: 'POST'
+        url: 'http://localhost:8000/postAssetToAsterias'
+        headers:
+          content-type: 'application/json'
+        body:
+          name: ${{ parameters.name }}
+          project: ${{ parameters.project }}
+          infrastructure: ${{ parameters.infrastructure }}
+          languages: ${{ parameters.languages }}
